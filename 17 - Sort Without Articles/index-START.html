@@ -1,55 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Sort Without Articles</title>
-</head>
-<body>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      background: url("https://source.unsplash.com/nDqA4d5NL0k/2000x2000");
-      background-size: cover;
-      display: flex;
-      align-items: center;
-      min-height: 100vh;
-    }
+  <head>
+    <meta charset="UTF-8">
+    <title>Sort Without Articles</title>
+  </head>
 
-    #bands {
-      list-style: inside square;
-      font-size: 20px;
-      background: white;
-      width: 500px;
-      margin: auto;
-      padding: 0;
-      box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.05);
-    }
-    
-    #bands li {
-      border-bottom: 1px solid #efefef;
-      padding: 20px;
-    }
-    
-    #bands li:last-child {
-      border-bottom: 0;
-    }
+  <body>
 
-    a {
-      color: #ffc600;
-      text-decoration: none;
-    }
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif;
+        background: url("https://source.unsplash.com/nDqA4d5NL0k/2000x2000");
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        min-height: 100vh;
+      }
 
-  </style>
+      #bands {
+        list-style: inside square;
+        font-size: 20px;
+        background: white;
+        width: 500px;
+        margin: auto;
+        padding: 0;
+        box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.05);
+      }
 
-  <ul id="bands"></ul>
+      #bands li {
+        border-bottom: 1px solid #efefef;
+        padding: 20px;
+      }
 
-<script>
-const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+      #bands li:last-child {
+        border-bottom: 0;
+      }
 
+      a {
+        color: #ffc600;
+        text-decoration: none;
+      }
+    </style>
 
-</script>
+    <ul id="bands"></ul>
 
-</body>
+    <script>
+      const bands = ['The Plot in You', 'The Devil Wears Prada',
+        'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything',
+        'The Midway State', 'We Came as Romans', 'Counterparts',
+        'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+      const article = ['A', 'An', 'The']
+      const list = document.querySelector('#bands')
+      const sortedBands = bands.sort((a, b) => {
+        const arrayA = a.split(' ')
+        const arrayB = b.split(' ')
+        if (article.includes(arrayA[0])) {
+          arrayA.splice(0, 1)
+        }
+        if (article.includes(arrayB[0])) {
+          arrayB.splice(0, 1)
+        }
+        const filteredA = arrayA.join(' ')
+        const filteredB = arrayB.join(' ')
+        return filteredA < filteredB ? -1 : 1
+      })
+
+      const strip = (name) => {
+        return name.replace(/^(a |an |the )/i, '').trim()
+      }
+
+      const sortedBands2 = bands.sort((a, b) => strip(a) < strip(b) ? -1 : 1)
+      list.innerHTML = sortedBands2.map(band => `
+        <li>${band}</li>
+      `).join('')
+    </script>
+
+  </body>
+
 </html>
