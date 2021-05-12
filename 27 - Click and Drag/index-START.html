@@ -35,6 +35,34 @@
   </div>
 
 <script>
+  const drag = document.querySelector('.items')
+  let scrollLeft;
+  let startX;
+  let isDown = false;
+
+  drag.addEventListener('mousedown',(e)=>{
+    isDown = true
+    drag.classList.add('active')
+    startX = e.pageX - drag.offsetLeft;
+    scrollLeft = drag.scrollLeft
+
+  })
+  drag.addEventListener('mouseup',()=>{
+    isDown = false
+    drag.classList.remove('active')
+  })
+  drag.addEventListener('mouseleave',()=>{
+    isDown = false
+    drag.classList.remove('active')
+  })
+  drag.addEventListener('mousemove',(e)=>{
+    if(!isDown) return;
+    e.preventDefault()
+    const x = e.pageX - drag.offsetLeft
+    const walk = x - startX
+    drag.scrollLeft = scrollLeft - walk*3
+  })
+
 </script>
 
   </body>
